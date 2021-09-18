@@ -15,12 +15,10 @@ def get_gen_st_1(word):
 # This will apply kpt vaihtelu as appropriate and perform any
 # other applicable suffix transformation according to the
 # sanatyypi of the word.
-# May return None if the correct vartalo couldn't be identified.
-# TODO(aeckleder): Check whether we should default of st1 in this case.
+# TODO(aeckleder): This is only correct for st1 words.
 def get_genetiivivartalo(word):
-    if word[-1] in base_fi.FRONT_VOWELS + base_fi.BACK_VOWELS:
-        return get_gen_st_1(word)
-    return None
+    # if word[-1] in base_fi.FRONT_VOWELS + base_fi.BACK_VOWELS:
+    return get_gen_st_1(word)
 
 # Generate the partitiivi of the specified word.
 # TODO(aeckleder): While the current rules are comprehensive, they're

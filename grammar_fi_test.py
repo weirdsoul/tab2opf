@@ -57,5 +57,19 @@ class TestInflectionRules(unittest.TestCase):
         for w in golden_inflections:
             self.assertEqual(grammar_fi.getinflections(w[0], 'noun'), w[1])
 
+    def test_adjective_inflections(self):
+        golden_inflections = [
+            ('kuuma', [
+                ('genetiivi', 'kuuman'),
+                ('monikko', 'kuumat'),
+                ('partitiivi', 'kuumaa'),
+                ('genetiivi + ko', 'kuumanko'),
+                ('monikko + ko', 'kuumatko'),
+                ('partitiivi + ko', 'kuumaako'),
+                ('perusmuoto + ko', 'kuumako')])
+        ]
+        for w in golden_inflections:
+            self.assertEqual(grammar_fi.getinflections(w[0], 'adj'), w[1])
+
 if __name__ == '__main__':
     unittest.main()

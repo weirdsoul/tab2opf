@@ -23,7 +23,7 @@ def getinflections(word, word_type):
     inflections = []
     if word_type == 'verb':
         inflections = conjugations_fi.get_conjugations(word)
-    elif word_type == 'noun':
+    elif word_type == 'noun' or word_type == 'adj':
         inflections = declensions_fi.get_declensions(word)
     apply_ko_suffix(word, inflections)
     return inflections

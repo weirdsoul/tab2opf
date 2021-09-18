@@ -22,12 +22,18 @@ class TestDeclensionRules(unittest.TestCase):
                 ('monikko', 'makkarat'),
                 ('partitiivi', 'makkaraa')
             ]),
-            # TODO(aeckleder): genetiivi vartalo isn't implemented yet.
+            # TODO(aeckleder): genetiivi vartalo is incorrect, should
+            # be osoitee.
             ('osoite', [
+                ('genetiivi', 'osoiden'),
+                ('monikko', 'osoidet'),
                 ('partitiivi', 'osoitetta')
             ]),
-            # TODO(aeckleder): genetiivi vartalo isn't implemented yet.
+            # TODO(aeckleder): genetiivi vartalo is incorrect, should
+            # be puhelime.
             ('puhelin', [
+                ('genetiivi', 'puhelinn'),
+                ('monikko', 'puhelint'),
                 ('partitiivi', 'puhelinta')
             ]),
             # kpt applied (except for partitiivi, of course).
@@ -41,6 +47,12 @@ class TestDeclensionRules(unittest.TestCase):
                 ('genetiivi', 'kengän'),
                 ('monikko', 'kengät'),
                 ('partitiivi', 'kenkää')
+            ]),
+            # Should work for adjectives, too.
+            ('kuuma', [
+                ('genetiivi', 'kuuman'),
+                ('monikko', 'kuumat'),
+                ('partitiivi', 'kuumaa')
             ])
         ]
         for w in golden_declensions:
