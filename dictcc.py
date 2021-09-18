@@ -47,20 +47,28 @@ def denoise(key):
 
     return key
 
+def getkey(key):
+    # Return the first word
+    return key.split()[0]
+
 # Map key onto some sensible long word in the term,
 # trying to avoid punctiation, gender marking
 # and parenthesized information
-def getkey(key):
+def getkey_old(key):
     key = denoise(key)
-    # return the biggest word in the term
+    # return the first word in the term
     return max(key.split(),
                key=lambda k: len(k))
+
+# Don't perform any transformations.
+def getdef(odef):
+    return odef
 
 # the definitions are
 # definition {tab} part-of-speech pairs
 # Return (part-of-speech) definition
 d = re.compile(r"\s*\t\s*")
-def getdef(odef):
+def getdef_old(odef):
     try: dfn, ops = d.split(odef, 1)
     except ValueError:
         print("Split error: '{}'".format(odef))

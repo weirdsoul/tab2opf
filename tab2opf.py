@@ -46,7 +46,10 @@ import os
 import argparse
 from itertools import islice, count, groupby
 from contextlib import contextmanager
+from xml.sax.saxutils import escape
 import importlib
+
+import grammar_fi
 
 # Stop with the encoding -- it's broken anyhow
 # in the kindles and undefined.
@@ -83,9 +86,9 @@ def parseargs():
     parser = argparse.ArgumentParser("tab2opf")
     parser.add_argument("-v", "--verbose", help="make verbose", 
                         action="store_true")
-    parser.add_argument("-m", "--module", 
+    parser.add_argument("-m", "--module", default="dictcc",
                         help="Import module for mapping, getkey, getdef")
-    parser.add_argument("-s", "--source", default="en", help="Source language")
+    parser.add_argument("-s", "--source", default="fi", help="Source language")
     parser.add_argument("-t", "--target", default="en", help="Target language")
     parser.add_argument("file", help="tab file to input")    
     return parser.parse_args()
@@ -126,25 +129,21 @@ def readkey(r, defs):
 
     term = term.strip()
     defn = getdef(defn)
-    defn = defn.replace("\\\\","\\").\
-        replace(">", "\\>").\
-        replace("<", "\\<").\
+    defn = escape(defn.\
         replace("\\n","<br/>\n").\
-        strip()
+        strip())
 
-    nkey = normalizeUnicode(term)
+    split_defn = defn.split('\t', 3)
+    word_type = split_defn[1] if len(split_defn) > 1 else 'unknown'
+
+    # key is the 'translated' key, nkey is the
+    # normalized original key.
+    nkey = normalizeUnicode(term)    
     key = getkey(nkey)
-    key = key.\
-        replace('"', "'").\
-        replace('<', '\\<').\
-        replace('>', '\\>').\
-        lower().strip()
 
-    nkey = nkey.\
-        replace('"', "'").\
-        replace('<', '\\<').\
-        replace('>', '\\>').\
-        lower().strip()
+    # Both are escaped not to produce any undesired html.
+    key = escape(key.lower().strip())
+    nkey = escape(nkey.lower().strip())
 
     if key == '':
         raise Exception("Missing key {}".format(term))
@@ -153,7 +152,18 @@ def readkey(r, defs):
 
     if VERBOSE: print(key, ":", term)
 
-    ndef = [term, defn, key == nkey]
+    # ndef is the value of the map. It's essentially an array
+    # with each index having a special meaning:
+    #  index 0: The original term
+    #  index 1: The definition
+    #  index 2: Whether the key matches the translated key.
+    #           This is primarily used as a sorting criteria.
+    #  index 3: Word type (noun, verb etc.)
+    #  index 4: A list of inflections based on key. These are
+    #           tuples of the form (form, inflection), e.g.
+    #           ("first person singluar", "menen").
+    ndef = [term, defn, key == nkey, word_type,
+            grammar_fi.getinflections(key, word_type)]
     if key in defs: defs[key].append(ndef)
     else:           defs[key] = [ndef]
 
@@ -218,15 +228,35 @@ def keyf(defn):
 def writekey(to, key, defn):
     terms = iter(sorted(defn, key=keyf))
     for term, g in groupby(terms, key=lambda d: d[0]):
+        defs = list(g)
         to.write(
 """
-      <idx:entry name="word" scriptable="yes">
-        <h2>
-          <idx:orth value="{key}">{term}</idx:orth>
-        </h2>
-""".format(term=term, key=key))
-
-        to.write('; '.join(ndefn for _, ndefn, _ in g))
+        <idx:entry name="word" scriptable="yes" spell="yes">
+          <h2>
+            <idx:orth value="{key}">{term}
+""".format(key=key, term=term))
+        # Now write any inflections we know of
+        for _, _, _, word_type, inflections in defs:
+            if inflections:
+                to.write(
+"""                
+                <idx:infl inflgrp="{word_type}">
+""".format(word_type=word_type))
+                for i in inflections:
+                    to.write(
+"""
+                    <idx:iform name="{infl_type}" value="{value}"/>
+""".format(infl_type=i[0], value=i[1]))                
+                to.write(
+"""                
+                </idx:infl>
+""")
+        to.write(
+"""         </idx:orth>
+          </h2>
+""")
+        d = '; '.join(ndefn for _, ndefn, _, _, _ in defs)
+        to.write(d)
         to.write(
 """
       </idx:entry>
@@ -298,6 +328,9 @@ def openopf(ndicts, name):
 # Write the opf that describes all the key files
 def writeopf(ndicts, name):
     with openopf(ndicts, name) as to:
+        to.write(
+"""     <item id="cover" href="cover.jpg" media-type="image/jpeg"/>
+""")
         for i in range(ndicts):
             to.write(
 """     <item id="dictionary{ndict}" href="{name}{ndict}.html" media-type="text/x-oeb1-document"/>
@@ -307,8 +340,8 @@ def writeopf(ndicts, name):
 </manifest>
 <!-- list of the html files in the correct order  -->
 <spine>
-"""
-)
+        <itemref idref="cover"/>
+""")
         for i in range(ndicts):
             to.write("""
 	<itemref idref="dictionary{ndict}"/>
