@@ -6,10 +6,15 @@
 import base_structures_fi as base_fi
 import kpt_fi
 
-# Generate genetiivi form for -a/o/u/y/ä/ö suffixes (sanatyypi 1).
+# Generate genetiivi form for -a/o/u/y/ä/ö and consonant
+# suffixes that are not any of the other sanatyypit (sanatyypi 1).
 # Essentially, this applies kpt vaihtelu only, no suffix modifications.
 def get_gen_st_1(word):
-    return kpt_fi.apply_kpt_vaihtelu(word)
+    v = kpt_fi.apply_kpt_vaihtelu(word)
+    if not base_fi.is_vowel(v[-1]):
+        # Consonants
+        v = v + 'i'
+    return v
 
 # Generate the genetiivi vartalo for the specified substantive.
 # This will apply kpt vaihtelu as appropriate and perform any
@@ -38,10 +43,19 @@ def get_declensions(word):
     results = []
     gen_vartalo = get_genetiivivartalo(word)
     if gen_vartalo:
+        suffix_vowel = 'a' if base_fi.is_back_word(word) else 'ä'
+        
         # If we could build the genetiivi vartalo correctly,
         # we can generate several forms from it.
         results.append(('genetiivi', gen_vartalo + 'n'))
         results.append(('monikko', gen_vartalo + 't'))
+        # Paikallissijat.
+        # TODO(aeckleder): Add support for illatiivi.
+        results.append(('inessiivi', gen_vartalo + 'ss' + suffix_vowel))
+        results.append(('elatiivi', gen_vartalo + 'st' + suffix_vowel))
+        results.append(('allatiivi', gen_vartalo + 'lle'))
+        results.append(('adessiivi', gen_vartalo + 'll' + suffix_vowel))
+        results.append(('ablatiivi', gen_vartalo + 'lt' + suffix_vowel))        
         
     results.append(('partitiivi', get_partitiivi(word)))
     

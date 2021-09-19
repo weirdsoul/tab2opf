@@ -48,9 +48,19 @@ class TestInflectionRules(unittest.TestCase):
             ('pöytä', [
                 ('genetiivi', 'pöydän'),
                 ('monikko', 'pöydät'),
+                ('inessiivi', 'pöydässä'),
+                ('elatiivi', 'pöydästä'),
+                ('allatiivi', 'pöydälle'),
+                ('adessiivi', 'pöydällä'),
+                ('ablatiivi', 'pöydältä'),                
                 ('partitiivi', 'pöytää'),
                 ('genetiivi + kö', 'pöydänkö'),
                 ('monikko + kö', 'pöydätkö'),
+                ('inessiivi + kö', 'pöydässäkö'),
+                ('elatiivi + kö', 'pöydästäkö'),
+                ('allatiivi + kö', 'pöydällekö'),
+                ('adessiivi + kö', 'pöydälläkö'),
+                ('ablatiivi + kö', 'pöydältäkö'),                
                 ('partitiivi + kö', 'pöytääkö'),
                 ('perusmuoto + kö', 'pöytäkö')])
         ]
@@ -62,9 +72,19 @@ class TestInflectionRules(unittest.TestCase):
             ('kuuma', [
                 ('genetiivi', 'kuuman'),
                 ('monikko', 'kuumat'),
+                ('inessiivi', 'kuumassa'),
+                ('elatiivi', 'kuumasta'),
+                ('allatiivi', 'kuumalle'),
+                ('adessiivi', 'kuumalla'),
+                ('ablatiivi', 'kuumalta'),                
                 ('partitiivi', 'kuumaa'),
                 ('genetiivi + ko', 'kuumanko'),
                 ('monikko + ko', 'kuumatko'),
+                ('inessiivi + ko', 'kuumassako'),
+                ('elatiivi + ko', 'kuumastako'),
+                ('allatiivi + ko', 'kuumalleko'),
+                ('adessiivi + ko', 'kuumallako'),
+                ('ablatiivi + ko', 'kuumaltako'),                
                 ('partitiivi + ko', 'kuumaako'),
                 ('perusmuoto + ko', 'kuumako')])
         ]

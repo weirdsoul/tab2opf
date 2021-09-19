@@ -14,12 +14,24 @@ class TestDeclensionRules(unittest.TestCase):
             ('museo', [
                 ('genetiivi', 'museon'),
                 ('monikko', 'museot'),
+                # TODO(aeckleder): No illatiivi yet.
+                ('inessiivi', 'museossa'),
+                ('elatiivi', 'museosta'),
+                ('allatiivi', 'museolle'),
+                ('adessiivi', 'museolla'),
+                ('ablatiivi', 'museolta'),
                 ('partitiivi', 'museota')
             ]),
             # No kpt, because not applicable to last syllable.
             ('makkara', [
                 ('genetiivi', 'makkaran'),
                 ('monikko', 'makkarat'),
+                # TODO(aeckleder): No illatiivi yet.
+                ('inessiivi', 'makkarassa'),
+                ('elatiivi', 'makkarasta'),
+                ('allatiivi', 'makkaralle'),
+                ('adessiivi', 'makkaralla'),
+                ('ablatiivi', 'makkaralta'),
                 ('partitiivi', 'makkaraa')
             ]),
             # TODO(aeckleder): genetiivi vartalo is incorrect, should
@@ -27,32 +39,51 @@ class TestDeclensionRules(unittest.TestCase):
             ('osoite', [
                 ('genetiivi', 'osoiden'),
                 ('monikko', 'osoidet'),
+                # TODO(aeckleder): No illatiivi yet.
+                ('inessiivi', 'osoidessa'),
+                ('elatiivi', 'osoidesta'),
+                ('allatiivi', 'osoidelle'),
+                ('adessiivi', 'osoidella'),
+                ('ablatiivi', 'osoidelta'),                
                 ('partitiivi', 'osoitetta')
             ]),
             # TODO(aeckleder): genetiivi vartalo is incorrect, should
             # be puhelime.
             ('puhelin', [
-                ('genetiivi', 'puhelinn'),
-                ('monikko', 'puhelint'),
+                ('genetiivi', 'puhelinin'),
+                ('monikko', 'puhelinit'),
+                # TODO(aeckleder): No illatiivi yet.
+                ('inessiivi', 'puhelinissa'),
+                ('elatiivi', 'puhelinista'),
+                ('allatiivi', 'puhelinille'),
+                ('adessiivi', 'puhelinilla'),
+                ('ablatiivi', 'puhelinilta'),                
                 ('partitiivi', 'puhelinta')
             ]),
             # kpt applied (except for partitiivi, of course).
             ('pöytä', [
                 ('genetiivi', 'pöydän'),
                 ('monikko', 'pöydät'),
+                # TODO(aeckleder): No illatiivi yet.
+                ('inessiivi', 'pöydässä'),
+                ('elatiivi', 'pöydästä'),
+                ('allatiivi', 'pöydälle'),
+                ('adessiivi', 'pöydällä'),
+                ('ablatiivi', 'pöydältä'),                
                 ('partitiivi', 'pöytää')
             ]),
-            # kpt applied (except for partitiivi, of course).
-            ('kenkä', [
-                ('genetiivi', 'kengän'),
-                ('monikko', 'kengät'),
-                ('partitiivi', 'kenkää')
-            ]),
-            # Should work for adjectives, too.
-            ('kuuma', [
-                ('genetiivi', 'kuuman'),
-                ('monikko', 'kuumat'),
-                ('partitiivi', 'kuumaa')
+            # Consonant suffix.
+            ('jazz', [
+                ('genetiivi', 'jazzin'),
+                ('monikko', 'jazzit'),
+                # TODO(aeckleder): No illatiivi yet.
+                ('inessiivi', 'jazzissa'),
+                ('elatiivi', 'jazzista'),
+                ('allatiivi', 'jazzille'),
+                ('adessiivi', 'jazzilla'),
+                ('ablatiivi', 'jazzilta'),            
+                # TODO(aeckleder): This is not correct.
+                ('partitiivi', 'jazzta')
             ])
         ]
         for w in golden_declensions:

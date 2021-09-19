@@ -2,9 +2,9 @@
 #
 # Module containing base structures for Finnish grammar.
 
-FRONT_VOWELS = ['ä', 'ö', 'y']
-BACK_VOWELS = ['a', 'o', 'u']
-NEUTRAL_VOWELS = ['e', 'i']
+FRONT_VOWELS = ['ä', 'ö', 'y', 'Ä', 'Ö', 'Y']
+BACK_VOWELS = ['a', 'o', 'u', 'A', 'O', 'U']
+NEUTRAL_VOWELS = ['e', 'i', 'E', 'I']
 ALL_VOWELS = FRONT_VOWELS + BACK_VOWELS + NEUTRAL_VOWELS
 
 def is_vowel(c):
