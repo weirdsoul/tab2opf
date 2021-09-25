@@ -71,14 +71,20 @@ def get_verbityyppi(word):
     # Unknown
     return 0
 
+# Return the vartalo of a word without any kpt changes.
+def get_vartalo(word):
+    vt = get_verbityyppi(word)
+    if vt == 1:
+        # Remove single character suffix.
+        return word[:-1]
+    return word[:-2]
+
 # Apply vt1 conjugation rules if applicable. Otherwise,
 # returns an empty array.
 def apply_present_vt1(word):
     if get_verbityyppi(word) != 1:
         return []
-    # Remove the a/ä suffix.
-    vartalo = word[:-1]
-    # TODO: This is very incomplete.
+    vartalo = get_vartalo(word)
     return conjugate_present(word, vartalo, connector='',
                              strength_map='hh-hh-',
                              vowel_group=word[-1])
@@ -88,9 +94,7 @@ def apply_present_vt1(word):
 def apply_present_vt2(word):
     if get_verbityyppi(word) != 2:
         return []
-    # Remove the da/dä suffix.
-    vartalo = word[:-2]
-    # TODO: This is very incomplete.
+    vartalo = get_vartalo(word)
     return conjugate_present(word, vartalo, connector='',
                              strength_map='------',
                              vowel_group=word[-1])
@@ -100,9 +104,7 @@ def apply_present_vt2(word):
 def apply_present_vt3(word):
     if get_verbityyppi(word) != 3:
         return []
-    # Remove the Xa/Xä suffix
-    vartalo = word[:-2]
-    # TODO: This is very incomplete.
+    vartalo = get_vartalo(word)
     return conjugate_present(word, vartalo, connector='e',
                              strength_map='vvvvvv',
                              vowel_group=word[-1])
@@ -112,10 +114,8 @@ def apply_present_vt3(word):
 def apply_present_vt4(word):
     if get_verbityyppi(word) != 4:
         return []
-    
-    # Remove the ta/tä suffix.
-    vartalo = word[:-2]
-    # TODO: This is very incomplete.
+
+    vartalo = get_vartalo(word)    
     return conjugate_present(word, vartalo, connector=word[-1],
                              strength_map='vvvvvv',
                              vowel_group=word[-1])
@@ -126,9 +126,7 @@ def apply_present_vt5(word):
     if get_verbityyppi(word) != 5:
         return []
     
-    # Remove the ta/tä suffix
-    vartalo = word[:-2]
-    # TODO: This is very incomplete.
+    vartalo = get_vartalo(word)
     return conjugate_present(word, vartalo, connector='tse',
                              strength_map='------',
                              vowel_group=word[-1])
@@ -139,9 +137,7 @@ def apply_present_vt6(word):
     if get_verbityyppi(word) != 6:
         return []
     
-    # Remove the ta/tä suffix
-    vartalo = word[:-2]
-    # TODO: This is very incomplete.
+    vartalo = get_vartalo(word)
     return conjugate_present(word, vartalo, connector='ne',
                              strength_map='vvvvvv', vowel_group=word[-1])
 
@@ -262,7 +258,30 @@ def apply_imperfekti(word):
     return (apply_imperfekti_add_i_cases(word, c) +
             apply_imperfekti_replace_by_i_cases(word, c))
 
+# Produce negatiivinen imperfekti participles.
+def apply_negatiivinen_imperfekti(word):
+    vartalo = get_vartalo(word)
+    suffix_vowel = 'u' if base_fi.is_back_word(word) else 'y'
+    vt = get_verbityyppi(word)
+    # We default to a 'n' as first character, as is the case for
+    # vt 1 + 2 + some of vt 3.
+    start_suffix = 'n'
+    if vt == 3:
+        if len(word) > 2 and word[-3:-1] == 'st':
+            start_suffix = 's'
+        elif len(word) > 1:
+            start_suffix = word[-2]
+    elif vt > 3:
+        start_suffix = 'nn'
+    
+    result = [
+        ('negatiivinen imperfekti', vartalo + start_suffix + suffix_vowel + 't'),
+        ('monikon negatiivinen imperfekti', vartalo + start_suffix + 'eet')
+    ]
+    return result
+
 # Produce conjugations and other inflections of the specified verb.
 def get_conjugations(word):
     return (apply_present_tense(word) +
-            apply_imperfekti(word))
+            apply_imperfekti(word) +
+            apply_negatiivinen_imperfekti(word))

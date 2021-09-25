@@ -252,11 +252,40 @@ class TestVTRules(unittest.TestCase):
                 ('1pp imperfekti', 'tiesimme'),
                 ('2pp imperfekti', 'tiesitte'),
                 ('3pp imperfekti', 'tiesivät')])]
-
-            
             
         for w in golden_conjugations:
             self.assertGreaterEqual(set(co_fi.apply_imperfekti(w[0])), set(w[1]))
+
+    def test_negatiivinen_imperfekti(self):
+        golden_conjugations = [
+            ('asua', [ # vt 1
+                ('negatiivinen imperfekti', 'asunut'),
+                ('monikon negatiivinen imperfekti', 'asuneet')]),
+            ('syödä', [ # vt 2
+                ('negatiivinen imperfekti', 'syönyt'),
+                ('monikon negatiivinen imperfekti', 'syöneet')]),
+            ('tulla', [ # vt 3
+                ('negatiivinen imperfekti', 'tullut'),
+                ('monikon negatiivinen imperfekti', 'tulleet')]),
+            ('pestä', [ # vt 3
+                ('negatiivinen imperfekti', 'pessyt'),
+                ('monikon negatiivinen imperfekti', 'pesseet')]),
+            ('osata', [ # vt 4
+                ('negatiivinen imperfekti', 'osannut'),
+                ('monikon negatiivinen imperfekti', 'osanneet')]),
+            ('tarvita', [ # vt 5
+                ('negatiivinen imperfekti', 'tarvinnut'),
+                ('monikon negatiivinen imperfekti', 'tarvinneet')]),
+            ('vähetä', [ # vt 6
+                ('negatiivinen imperfekti', 'vähennyt'),
+                ('monikon negatiivinen imperfekti', 'vähenneet')])
+            
+        ]
+        
+        for w in golden_conjugations:
+            self.assertGreaterEqual(set(co_fi.apply_negatiivinen_imperfekti(w[0])), set(w[1]))
+
+        
             
 if __name__ == '__main__':
     unittest.main()

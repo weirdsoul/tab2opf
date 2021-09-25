@@ -23,6 +23,9 @@ class TestInflectionRules(unittest.TestCase):
                 ('1pp imperfekti', 'annoimme'),
                 ('2pp imperfekti', 'annoitte'),
                 ('3pp imperfekti', 'antoivat'),
+                
+                ('negatiivinen imperfekti', 'antanut'),
+                ('monikon negatiivinen imperfekti', 'antaneet'),
 
                 ('1ps present + ko', 'annanko'),
                 ('2ps present + ko', 'annatko'),
@@ -37,7 +40,7 @@ class TestInflectionRules(unittest.TestCase):
                 ('2pp imperfekti + ko', 'annoitteko'),
                 ('3pp imperfekti + ko', 'antoivatko'),
 
-                ('perusmuoto + ko', 'antaako')
+                ('perusmuoto + ko', 'antaako'),
             ])
         ]
         for w in golden_inflections:
