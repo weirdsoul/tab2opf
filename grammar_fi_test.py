@@ -41,7 +41,7 @@ class TestInflectionRules(unittest.TestCase):
             ])
         ]
         for w in golden_inflections:
-            self.assertEqual(grammar_fi.getinflections(w[0], 'verb'), w[1])
+            self.assertGreaterEqual(grammar_fi.getinflections(w[0], 'verb'), w[1])
 
     def test_noun_inflections(self):
         golden_inflections = [
@@ -65,7 +65,7 @@ class TestInflectionRules(unittest.TestCase):
                 ('perusmuoto + kö', 'pöytäkö')])
         ]
         for w in golden_inflections:
-            self.assertEqual(grammar_fi.getinflections(w[0], 'noun'), w[1])
+            self.assertGreaterEqual(grammar_fi.getinflections(w[0], 'noun'), w[1])
 
     def test_adjective_inflections(self):
         golden_inflections = [
@@ -89,7 +89,7 @@ class TestInflectionRules(unittest.TestCase):
                 ('perusmuoto + ko', 'kuumako')])
         ]
         for w in golden_inflections:
-            self.assertEqual(grammar_fi.getinflections(w[0], 'adj'), w[1])
+            self.assertGreaterEqual(grammar_fi.getinflections(w[0], 'adj'), w[1])
 
 if __name__ == '__main__':
     unittest.main()
