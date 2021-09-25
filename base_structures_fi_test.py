@@ -15,8 +15,7 @@ class TestVowels(unittest.TestCase):
         ]
 
         for p in back_words:
-            self.assertGreaterEqual(base_fi.is_back_word(p[0]),
-                             p[1])
+            self.assertEqual(base_fi.is_back_word(p[0]), p[1])
 
 class TestSyllableSplit(unittest.TestCase):
 
@@ -36,8 +35,8 @@ class TestSyllableSplit(unittest.TestCase):
         ]
 
         for p in golden_splits:
-            self.assertGreaterEqual(base_fi.split_syllables(p[0]),
-                             p[1])
+            self.assertGreaterEqual(set(base_fi.split_syllables(p[0])),
+                                    set(p[1]))
             
 if __name__ == '__main__':
     unittest.main()

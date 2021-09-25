@@ -84,10 +84,15 @@ class TestDeclensionRules(unittest.TestCase):
                 ('ablatiivi', 'jazzilta'),            
                 # TODO(aeckleder): This is not correct.
                 ('partitiivi', 'jazzta')
+            ]),
+            # 'eä' suffix 
+            ('vihreä', [
+                ('genetiivi', 'vihreän'),
+                ('partitiivi', 'vihreää')
             ])
-        ]
+        ]        
         for w in golden_declensions:
-            self.assertGreaterEqual(dec_fi.get_declensions(w[0]), w[1])
+            self.assertGreaterEqual(set(dec_fi.get_declensions(w[0])), set(w[1]))
             
 if __name__ == '__main__':
     unittest.main()

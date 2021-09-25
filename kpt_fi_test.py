@@ -27,8 +27,8 @@ class TestKPTRules(unittest.TestCase):
         ]
         
         for p in golden_kpt_pairs:
-            self.assertGreaterEqual(kpt_fi.apply_kpt_vaihtelu(p[0]),
-                             p[1])        
+            self.assertGreaterEqual(set(kpt_fi.apply_kpt_vaihtelu(p[0])),
+                                    set(p[1]))
             
 if __name__ == '__main__':
     unittest.main()

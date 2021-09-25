@@ -33,7 +33,8 @@ def get_partitiivi(word):
     if word[-1] == 'e':
         return word + 'tt' + suffix_vowel
     elif (not base_fi.is_vowel(word[-1]) or
-          len(word) > 1 and base_fi.is_vowel(word[-2])):
+          len(word) > 1 and base_fi.is_vowel(word[-2]) and
+          not (word[-2] in base_fi.NEUTRAL_VOWELS and word[-1] in ['a', 'ä'])):
         return word + 't' + suffix_vowel
     else:
         return word + suffix_vowel

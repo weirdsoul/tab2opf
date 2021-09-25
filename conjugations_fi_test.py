@@ -25,7 +25,7 @@ class TestVTRules(unittest.TestCase):
                 ('2pp present', 'jaatte'),
                 ('3pp present', 'jakavat')])]
         for w in golden_conjugations:
-            self.assertGreaterEqual(co_fi.apply_present_tense(w[0]), w[1])        
+            self.assertGreaterEqual(set(co_fi.apply_present_tense(w[0])), set(w[1]))            
 
     def test_present_vt2(self):
         golden_conjugations = [
@@ -37,7 +37,7 @@ class TestVTRules(unittest.TestCase):
                 ('2pp present', 'syötte'),
                 ('3pp present', 'syövät')])]
         for w in golden_conjugations:
-            self.assertGreaterEqual(co_fi.apply_present_tense(w[0]), w[1])
+            self.assertGreaterEqual(set(co_fi.apply_present_tense(w[0])), set(w[1]))
 
     def test_present_vt3(self):
         golden_conjugations = [
@@ -77,7 +77,7 @@ class TestVTRules(unittest.TestCase):
                 ('2pp present', 'juttelette'),
                 ('3pp present', 'juttelevat')])]
         for w in golden_conjugations:
-            self.assertGreaterEqual(co_fi.apply_present_tense(w[0]), w[1])
+            self.assertGreaterEqual(set(co_fi.apply_present_tense(w[0])), set(w[1]))
 
     def test_present_vt4(self):
         golden_conjugations = [
@@ -111,7 +111,7 @@ class TestVTRules(unittest.TestCase):
             #    ('2pp present', 'makaatte'),
             #    ('3pp present', 'makaavat')])]
         for w in golden_conjugations:
-            self.assertGreaterEqual(co_fi.apply_present_tense(w[0]), w[1])
+            self.assertGreaterEqual(set(co_fi.apply_present_tense(w[0])), set(w[1]))
 
     def test_present_vt5(self):
         golden_conjugations = [
@@ -130,7 +130,7 @@ class TestVTRules(unittest.TestCase):
                 ('2pp present', 'häiritsette'),
                 ('3pp present', 'häiritsevät')])]
         for w in golden_conjugations:
-            self.assertGreaterEqual(co_fi.apply_present_tense(w[0]), w[1])
+            self.assertGreaterEqual(set(co_fi.apply_present_tense(w[0])), set(w[1]))
 
     def test_present_vt6(self):
         golden_conjugations = [
@@ -149,7 +149,7 @@ class TestVTRules(unittest.TestCase):
                 ('2pp present', 'lämpenette'),
                 ('3pp present', 'lämpenevät')])]            
         for w in golden_conjugations:
-            self.assertGreaterEqual(co_fi.apply_present_tense(w[0]), w[1])
+            self.assertGreaterEqual(set(co_fi.apply_present_tense(w[0])), set(w[1]))
 
 
     def test_imperfekti(self):
@@ -256,7 +256,7 @@ class TestVTRules(unittest.TestCase):
             
             
         for w in golden_conjugations:
-            self.assertGreaterEqual(co_fi.apply_imperfekti(w[0]), w[1])
+            self.assertGreaterEqual(set(co_fi.apply_imperfekti(w[0])), set(w[1]))
             
 if __name__ == '__main__':
     unittest.main()
