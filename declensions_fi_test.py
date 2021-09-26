@@ -92,7 +92,23 @@ class TestDeclensionRules(unittest.TestCase):
             ('vene', [
                 ('genetiivi', 'veneen'),
                 ('partitiivi', 'venettä')
-            ])
+            ]),
+            # nen-sanatyyppi
+            ('valkoinen', [
+                ('genetiivi', 'valkoisen'),
+                ('partitiivi', 'valkoista')
+            ]),
+            # nen-sanatyyppi with front vowel
+            ('helsinkiläinen', [
+                ('genetiivi', 'helsinkiläisen'),
+                ('partitiivi', 'helsinkiläistä')
+            ]),
+            # si-sanatyyppi
+            ('uusi', [
+                ('genetiivi', 'uuden'),
+                ('partitiivi', 'uutta')
+            ]),
+            
         ]    
         for w in golden_declensions:
             self.assertGreaterEqual(set(dec_fi.get_declensions(w[0])), set(w[1]))
