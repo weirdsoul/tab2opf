@@ -16,12 +16,21 @@ def get_gen_st_1(word):
         v = v + 'i'
     return v
 
+# Generate genetiivi form for e-sanatyyppi words.
+def get_gen_st_e(word):
+    # We simply double the 'e' suffix to obtain the vartalo
+    return kpt_fi.apply_kpt_vaihtelu(word) + word[-1]
+
 # Generate the genetiivi vartalo for the specified substantive.
 # This will apply kpt vaihtelu as appropriate and perform any
 # other applicable suffix transformation according to the
 # sanatyypi of the word.
-# TODO(aeckleder): This is only correct for st1 words.
+# TODO(aeckleder): Not all sanatyyppit are implemented.
 def get_genetiivivartalo(word):
+    if word[-1] == 'e':
+        # This is an e-sanatyyppi word.
+        return get_gen_st_e(word)
+    # We default to sanatyyppi 1 if we don't find a better match.
     # if word[-1] in base_fi.FRONT_VOWELS + base_fi.BACK_VOWELS:
     return get_gen_st_1(word)
 

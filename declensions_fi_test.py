@@ -34,17 +34,15 @@ class TestDeclensionRules(unittest.TestCase):
                 ('ablatiivi', 'makkaralta'),
                 ('partitiivi', 'makkaraa')
             ]),
-            # TODO(aeckleder): genetiivi vartalo is incorrect, should
-            # be osoitee.
             ('osoite', [
-                ('genetiivi', 'osoiden'),
-                ('monikko', 'osoidet'),
+                ('genetiivi', 'osoideen'),
+                ('monikko', 'osoideet'),
                 # TODO(aeckleder): No illatiivi yet.
-                ('inessiivi', 'osoidessa'),
-                ('elatiivi', 'osoidesta'),
-                ('allatiivi', 'osoidelle'),
-                ('adessiivi', 'osoidella'),
-                ('ablatiivi', 'osoidelta'),                
+                ('inessiivi', 'osoideessa'),
+                ('elatiivi', 'osoideesta'),
+                ('allatiivi', 'osoideelle'),
+                ('adessiivi', 'osoideella'),
+                ('ablatiivi', 'osoideelta'),                
                 ('partitiivi', 'osoitetta')
             ]),
             # TODO(aeckleder): genetiivi vartalo is incorrect, should
@@ -85,12 +83,17 @@ class TestDeclensionRules(unittest.TestCase):
                 # TODO(aeckleder): This is not correct.
                 ('partitiivi', 'jazzta')
             ]),
-            # 'eä' suffix 
+            # Partitiivi for 'eä' suffix 
             ('vihreä', [
                 ('genetiivi', 'vihreän'),
                 ('partitiivi', 'vihreää')
+            ]),
+            # e-sanatyyppi
+            ('vene', [
+                ('genetiivi', 'veneen'),
+                ('partitiivi', 'venettä')
             ])
-        ]        
+        ]    
         for w in golden_declensions:
             self.assertGreaterEqual(set(dec_fi.get_declensions(w[0])), set(w[1]))
             
