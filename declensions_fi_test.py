@@ -108,7 +108,25 @@ class TestDeclensionRules(unittest.TestCase):
                 ('genetiivi', 'uuden'),
                 ('partitiivi', 'uutta')
             ]),
-            
+            # i-sanatyyppi (variant #1: i -> i, no transformation)
+            ('hotelli', [
+                ('genetiivi', 'hotellin'),
+                ('partitiivi', 'hotellia')
+            ]),
+            # i-sanatyyppi (variant #2: i -> e, drop i for partitiivi)
+            # Note that i-sanatyyppit are ambiguous, so we always build
+            # all form candidates here, with i -> i being the default.
+            # This is ok for our use-case, because we're building an index
+            # rather than a dictionary or translator.
+            ('suuri', [
+                ('genetiivi (alt 1)', 'suuren'),
+                ('partitiivi (alt 1)', 'suurta')
+            ]),
+            # i-sanatyyppi (variant #3: i -> e, also in partitiivi)
+            ('nimi', [
+                ('genetiivi (alt 1)', 'nimen'),
+                ('partitiivi (alt 2)', 'nimeä')
+            ])
         ]    
         for w in golden_declensions:
             self.assertGreaterEqual(set(dec_fi.get_declensions(w[0])), set(w[1]))
